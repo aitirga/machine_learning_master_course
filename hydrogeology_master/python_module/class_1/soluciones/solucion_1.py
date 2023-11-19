@@ -3,7 +3,8 @@ import random
 import matplotlib.pyplot as plt
 import math
 
-n_puntos = 10000000
+n_puntos = 5000
+
 
 def dibujar_puntos(puntos):
     """
@@ -19,6 +20,7 @@ def dibujar_puntos(puntos):
     plt.scatter(x, y)
     plt.show()
 
+
 def dibujar_aproximaciones_pi(aproximaciones_pi):
     """
     Dibuja las aproximaciones de PI en función del número de puntos generados.
@@ -29,6 +31,7 @@ def dibujar_aproximaciones_pi(aproximaciones_pi):
     plt.axhline(y=math.pi, color='C1', linestyle='--')
     plt.show()
     # Crear una barra horizontal con el valor real de pi
+
 
 def main():
     # Paso 1: Generar puntos aleatorios y dibujarlos
@@ -46,15 +49,20 @@ def main():
             n_puntos_cuadrado += 1
         else:
             n_puntos_cuadrado += 1
-        if i % 10000 == 0:
+        if i % 1 == 0:
             aproximaxion_actual = 4 * n_puntos_circulo / n_puntos_cuadrado
             print(f'Aproximación actual de PI después de {i} iteraciones: ', aproximaxion_actual)
             aproximaciones_pi.append(aproximaxion_actual)
+    with open('aproximaciones_pi.txt', 'w') as f:
+        for aproximacion in aproximaciones_pi:
+            f.write(f'{aproximacion}\n')
+
     # Paso 2: Calcular PI
     pi = 4 * n_puntos_circulo / n_puntos_cuadrado
     print('Aproximacion final de PI = ', pi)
     # dibujar_puntos(puntos_generados)
     dibujar_aproximaciones_pi(aproximaciones_pi)
+
 
 if __name__ == '__main__':
     main()
