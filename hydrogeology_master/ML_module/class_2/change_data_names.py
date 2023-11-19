@@ -1,6 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
+
 if __name__ == '__main__':
     data = pd.read_pickle('./data/raw_data.pkl')
     print(data.shape)
