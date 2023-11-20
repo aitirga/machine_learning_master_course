@@ -10,3 +10,17 @@ Paso 3.1: Lee el fichero aproximaciones_pi.txt y guarda las aproximaciones de PI
 Paso 3.2: Crea un método que calcule diferentes tipos de error dada una lista de valores y el valor real.
 Paso 3.3: Haz un plot del error en función del número de puntos generados.
 """
+
+with open('nombre_del_archivo.txt', 'r') as archivo:
+    lineas = archivo.readlines()
+    print(lineas)
+
+
+import numpy as np
+
+# Crear un array simple
+# Aquí estamos creando un array de una dimensión con números del 1 al 5
+array_simple = np.array([1, 2, 3, 4, 5])
+print("Array Simple:", array_simple)
+
+array_simple.shape
