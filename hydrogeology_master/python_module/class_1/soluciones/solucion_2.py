@@ -1,76 +1,68 @@
-# Ejercicio 2: Calculando el error de la aproximación de PI
-
-
-# Paso 1: importa las librería matplotlib.pyplot as plt y math
+# Ejercicio 1: Calculando PI con Monte Carlo
+import random
 import matplotlib.pyplot as plt
 import math
 
-"""
-Paso 2: Genera el método main() y llama a la función main() desde el bloque if __name__ == '__main__'
-Paso 3: Crea una función main() que haga lo siguiente:
-Paso 3.1: Lee el fichero aproximaciones_pi.txt y guarda las aproximaciones de PI en una lista.
-Paso 3.2: Crea un método que calcule diferentes tipos de error dada una lista de valores y el valor real.
-Paso 3.3: Haz un plot del error en función del número de puntos generados.
-"""
+n_puntos = 5000
 
-def calcular_error_absoluto(valores, valor_real):
+
+def dibujar_puntos(puntos):
     """
-    Calcula el error absoluto de una lista de valores respecto a un valor real.
+    Dibuja los puntos en un plano.
     Args:
-        valores: lista de valores.
-        valor_real: valor real.
-
-    Returns:
-        Lista con los errores absolutos.
+        puntos: lista de tuplas con las coordenadas x e y de los puntos.
     """
-    errores = []
-    for valor in valores:
-        errores.append(abs(valor - valor_real))
-    return errores
+    x = []
+    y = []
+    for punto in puntos:
+        x.append(punto[0])
+        y.append(punto[1])
+    plt.scatter(x, y)
+    plt.show()
 
-def calcular_mse(valores, valor_real):
+
+def dibujar_aproximaciones_pi(aproximaciones_pi):
     """
-    Calcula el error cuadrático medio de una lista de valores respecto a un valor real.
+    Dibuja las aproximaciones de PI en función del número de puntos generados.
     Args:
-        valores: lista de valores.
-        valor_real: valor real.
-
-    Returns:
-        Lista con los errores cuadráticos medios.
+        aproximaciones_pi: lista con las aproximaciones de PI.
     """
-    errores = []
-    for valor in valores:
-        errores.append((valor - valor_real)**2)
-    return errores
+    plt.plot(aproximaciones_pi)
+    plt.axhline(y=math.pi, color='C1', linestyle='--')
+    plt.show()
+    # Crear una barra horizontal con el valor real de pi
 
-def calcular_error(valores, valor_real, tipo_error='absoluto'):
-    """
-    Calcula el error de una lista de valores respecto a un valor real.
-    Args:
-        valores: lista de valores.
-        valor_real: valor real.
-        tipo_error: tipo de error a calcular.
-
-    Returns:
-        Lista con los errores.
-    """
-    errores = []
-    if tipo_error == 'absoluto':
-        errores = calcular_error_absoluto(valores, valor_real)
-    elif tipo_error == 'mse':
-        errores = calcular_mse(valores, valor_real)
-    return errores
 
 def main():
-    with open('../data/aproximaciones_pi.txt', 'r') as f:
-        aproximaciones_pi = f.readlines()
-    aproximaciones_pi = [float(aproximacion.strip()) for aproximacion in aproximaciones_pi]
-    errores = calcular_error(aproximaciones_pi, math.pi, tipo_error='mse')
-    plt.plot(errores)
-    plt.semilogy()
-    plt.show()
+    # Paso 1: Generar puntos aleatorios y dibujarlos
+    n_puntos_circulo = 0
+    n_puntos_cuadrado = 0
+    r_circulo = 1
+    puntos_generados = []
+    aproximaciones_pi = []
+    for i in range(n_puntos):
+        x = random.random() * 2 * r_circulo - r_circulo
+        y = random.random() * 2 * r_circulo - r_circulo
+        puntos_generados.append((x, y))
+        if x**2 + y**2 <= r_circulo**2:
+            n_puntos_circulo += 1
+            n_puntos_cuadrado += 1
+        else:
+            n_puntos_cuadrado += 1
+        if i % 1 == 0:
+            aproximaxion_actual = 4 * n_puntos_circulo / n_puntos_cuadrado
+            print(f'Aproximación actual de PI después de {i} iteraciones: ', aproximaxion_actual)
+            aproximaciones_pi.append(aproximaxion_actual)
+    with open('aproximaciones_pi.txt', 'w') as f:
+        for aproximacion in aproximaciones_pi:
+            f.write(f'{aproximacion}\n')
+
+    # Paso 2: Calcular PI
+    pi = 4 * n_puntos_circulo / n_puntos_cuadrado
+    print('Aproximacion final de PI = ', pi)
+    # dibujar_puntos(puntos_generados)
+    dibujar_aproximaciones_pi(aproximaciones_pi)
+
 
 if __name__ == '__main__':
     main()
-
-
