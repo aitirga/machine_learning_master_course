@@ -6,6 +6,7 @@ if __name__ == '__main__':
     data = pd.read_pickle('./data/raw_data.pkl')
     print(data.shape)
     print(data.columns)
+    plt.subplots(1)
     # Change column names
     # data.columns = [
     #     'Q_1', 'Q_2', 'Q_3', 'Q_4', 'Q_5', 'Q_6', 'Q_7', 'Q_8', 'EC'
@@ -14,3 +15,4 @@ if __name__ == '__main__':
     # data = data * 1.1
     # # Save the data
     # data.to_pickle('./data/raw_data.pkl')
+
